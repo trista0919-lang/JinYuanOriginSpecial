@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>今園草堂 · 草堂走走</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200;300;400;500&family=Noto+Sans+TC:wght@300;400&display=swap" rel="stylesheet">
 <style>
 :root {
-  --ink: #1e1a14;
-  --ink-85: rgba(30,26,20,.85); /* 調深字體 */
+   --ink: #1e1a14;
+  --ink-85: rgba(30,26,20,.85); 
   --ink-40: rgba(30,26,20,.4);
   --ink-10: rgba(30,26,20,.1);
   --paper: #f5f0e6;
@@ -19,6 +19,7 @@
   --sage: #4a6741;
   --gold: #9a7010;
   --cream: #faf6ee;
+}
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -41,41 +42,125 @@ body {
   align-items: center;
   justify-content: center;
   position: relative;
+  overflow: hidden;
   background: var(--ink);
   padding: 40px 24px;
+}
+
+/* ink wash background SVG */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  opacity: .12;
+  pointer-events: none;
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.hero-tag {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 10px;
+  letter-spacing: .55em;
+  color: rgba(245,240,230,.35);
+  font-weight: 300;
+  margin-bottom: 22px;
+  text-transform: uppercase;
 }
 
 .hero-title {
-  font-size: clamp(40px, 10vw, 80px);
+  font-size: clamp(48px, 10vw, 88px);
   font-weight: 200;
-  letter-spacing: .35em;
+  letter-spacing: .38em;
   color: var(--paper);
-  line-height: 1.2;
-  margin-bottom: 24px;
+  line-height: 1;
+  margin-bottom: 16px;
 }
 
 .hero-sub {
-  font-size: 16px;
+  font-size: clamp(13px, 2.5vw, 16px);
   font-weight: 300;
-  letter-spacing: .25em;
-  color: rgba(245,240,230,.6);
+  letter-spacing: .28em;
+  color: rgba(245,240,230,.55);
+  margin-bottom: 48px;
 }
 
-/* ── NAV BAR ── */
+.hero-scroll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  opacity: .5;
+  transition: opacity .3s;
+}
+.hero-scroll:hover { opacity: 1; }
+.hero-scroll span {
+  font-size: 9px;
+  letter-spacing: .38em;
+  color: var(--paper);
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight: 300;
+}
+.scroll-line {
+  width: .5px;
+  height: 40px;
+  background: linear-gradient(to bottom, transparent, var(--paper));
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%,100% { opacity: .3; transform: scaleY(.8); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+/* decoration — small ink dots */
+.hero-deco {
+  position: absolute;
+  z-index: 1;
+  opacity: .15;
+}
+.hero-deco-tl { top: 8%; left: 6%; }
+.hero-deco-br { bottom: 8%; right: 6%; }
+
+/* ── INTRO STRIP ── */
+.intro {
+  background: var(--paper-warm);
+  border-top: .5px solid var(--ink-10);
+  border-bottom: .5px solid var(--ink-10);
+  padding: 32px 24px;
+  text-align: center;
+}
+.intro p {
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: .12em;
+  color: var(--ink-60);
+  line-height: 2;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* ── NAV DOTS ── */
 .nav-bar {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(245,240,230,.95);
-  backdrop-filter: blur(10px);
+  background: rgba(245,240,230,.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: .5px solid var(--ink-10);
+  padding: 0 16px;
   display: flex;
+  align-items: center;
+  gap: 0;
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -83,236 +168,513 @@ body {
 
 .nav-item {
   flex-shrink: 0;
-  padding: 16px 20px;
-  font-size: 13px;
-  color: var(--ink-85);
+  padding: 14px 14px;
+  font-size: 11px;
+  letter-spacing: .14em;
+  color: var(--ink-60);
   cursor: pointer;
+  border-bottom: 1.5px solid transparent;
+  transition: color .2s, border-color .2s;
   white-space: nowrap;
-  font-weight: 400;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
-.nav-item.active { color: var(--rust); font-weight: 600; border-bottom: 2px solid var(--rust); }
+.nav-item:hover { color: var(--ink); }
+.nav-item.active { color: var(--rust); border-bottom-color: var(--rust); }
+.nav-emoji { font-size: 13px; }
 
 /* ── SECTIONS ── */
 .section {
-  padding: 80px 0;
+  padding: 64px 0 80px;
   border-bottom: .5px solid var(--ink-10);
   scroll-margin-top: 50px;
 }
 .section:nth-child(even) { background: var(--cream); }
 
 .section-inner {
-  max-width: 680px;
+  max-width: 720px;
   margin: 0 auto;
-  padding: 0 28px;
+  padding: 0 24px;
 }
 
-/* 改良後的標題：ICON 在文字前面 */
+/* section header */
 .sec-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 28px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  align-items: start;
+  margin-bottom: 36px;
 }
 
+.sec-num {
+  font-size: 11px;
+  letter-spacing: .38em;
+  color: var(--ink-30);
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight: 300;
+  padding-top: 6px;
+  min-width: 32px;
+}
+
+.sec-titles {}
 .sec-emoji {
-  font-size: 32px;
+  font-size: 28px;
+  display: block;
+  margin-bottom: 6px;
   line-height: 1;
 }
-
 .sec-name {
-  font-size: 32px;
-  font-weight: 500;
-  letter-spacing: .05em;
+  font-size: clamp(28px, 6vw, 38px);
+  font-weight: 200;
+  letter-spacing: .12em;
   color: var(--ink);
-}
-
-.sec-tagline {
   display: block;
-  font-size: 14px;
-  letter-spacing: .15em;
-  color: var(--rust);
-  font-weight: 400;
-  margin-top: 4px;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.sec-tagline {
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: .22em;
+  color: var(--ink-60);
+  display: block;
 }
 
+/* accent rule */
+.sec-rule {
+  width: 32px;
+  height: .5px;
+  background: var(--rust-light);
+  margin: 24px 0;
+  opacity: .5;
+}
+
+/* body text */
 .sec-body {
-  font-size: 17px; /* 加大字體 */
-  line-height: 2.1;
-  color: var(--ink-85); /* 加深顏色 */
-  font-weight: 400;
-  letter-spacing: .04em;
-  margin-bottom: 24px;
+  font-size: 14px;
+  line-height: 2.0;
+  color: var(--ink-60);
+  font-weight: 300;
+  letter-spacing: .06em;
 }
 
+/* highlight callout */
 .callout {
   background: var(--paper-warm);
-  border-left: 3px solid var(--gold);
-  padding: 20px 24px;
-  margin: 30px 0;
+  border-left: 2px solid var(--gold-light);
+  padding: 14px 18px;
+  margin: 20px 0;
+  border-radius: 0 4px 4px 0;
 }
 .callout p {
-  font-size: 16px;
-  line-height: 1.9;
-  color: var(--ink-85);
-  font-weight: 500;
+  font-size: 12.5px;
+  line-height: 1.85;
+  color: var(--ink-60);
+  font-weight: 300;
+  letter-spacing: .06em;
 }
 
-.fact-box {
+/* key facts pills */
+.facts {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 24px;
+  gap: 8px;
+  margin: 20px 0;
 }
-.fact-tag {
+.fact {
   background: var(--paper-deep);
-  padding: 6px 14px;
-  font-size: 12px;
-  color: var(--ink-85);
-  border-radius: 2px;
+  border: .5px solid var(--ink-10);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 11px;
+  letter-spacing: .1em;
+  color: var(--ink-60);
+  font-weight: 300;
   font-family: 'Noto Sans TC', sans-serif;
 }
 
+/* IG BUTTON */
 .ig-btn {
-  display: inline-block;
-  margin-top: 32px;
-  padding: 14px 28px;
-  border: 1px solid var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 28px;
+  padding: 12px 22px;
+  background: transparent;
+  border: .5px solid var(--ink-30);
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: 'Noto Serif TC', serif;
+  font-size: 12px;
+  letter-spacing: .2em;
   color: var(--ink);
   text-decoration: none;
-  font-size: 14px;
-  letter-spacing: .1em;
-  transition: all 0.3s;
+  transition: background .2s, border-color .2s, color .2s;
+  font-weight: 300;
 }
-.ig-btn:hover { background: var(--ink); color: var(--paper); }
+.ig-btn:hover {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+.ig-btn-icon {
+  width: 16px; height: 16px;
+  opacity: .6;
+}
+.ig-btn:hover .ig-btn-icon { opacity: 1; filter: invert(1); }
+
+/* IG modal overlay */
+.ig-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(30,26,20,.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.ig-overlay.open { display: flex; }
+
+.ig-modal {
+  background: var(--paper);
+  border-radius: 8px;
+  max-width: 440px;
+  width: 100%;
+  overflow: hidden;
+  animation: modalIn .28s cubic-bezier(.22,1,.36,1);
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(.94) translateY(12px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.ig-modal-top {
+  background: var(--ink);
+  padding: 20px 22px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.ig-modal-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--rust);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.ig-modal-handle {
+  font-size: 13px;
+  color: var(--paper);
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight: 400;
+  letter-spacing: .06em;
+}
+.ig-modal-tag {
+  font-size: 10px;
+  color: rgba(245,240,230,.4);
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight: 300;
+  margin-top: 2px;
+}
+
+.ig-modal-img {
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--paper-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+}
+.ig-modal-img-icon { font-size: 48px; opacity: .35; }
+.ig-modal-img-hint {
+  font-size: 11px;
+  color: var(--ink-85);
+  letter-spacing: .18em;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
+.ig-modal-body { padding: 18px 22px 22px; }
+.ig-modal-title {
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: .1em;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.ig-modal-desc {
+  font-size: 12px;
+  line-height: 1.85;
+  color: var(--ink-60);
+  font-weight: 300;
+  letter-spacing: .05em;
+  margin-bottom: 18px;
+}
+.ig-modal-actions {
+  display: flex;
+  gap: 10px;
+}
+.ig-action-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 3px;
+  font-size: 12px;
+  letter-spacing: .14em;
+  cursor: pointer;
+  font-family: 'Noto Serif TC', serif;
+  border: .5px solid var(--ink-30);
+  background: transparent;
+  color: var(--ink);
+  transition: background .2s;
+}
+.ig-action-btn.primary {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+.ig-action-btn:hover:not(.primary) { background: var(--paper-warm); }
+.ig-action-btn.primary:hover { background: var(--rust); border-color: var(--rust); }
 
 /* ── FOOTER ── */
 .footer {
   background: var(--ink);
-  padding: 60px 24px;
+  padding: 48px 24px 40px;
   text-align: center;
-  color: var(--paper);
 }
-.footer-logo { font-size: 24px; letter-spacing: .4em; opacity: .8; margin-bottom: 12px; }
-.footer-note { font-size: 13px; opacity: .5; line-height: 1.8; }
+.footer-logo {
+  font-size: 28px;
+  font-weight: 200;
+  letter-spacing: .38em;
+  color: var(--paper);
+  opacity: .75;
+  margin-bottom: 10px;
+}
+.footer-en {
+  font-size: 9px;
+  letter-spacing: .52em;
+  color: rgba(245,240,230,.25);
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight: 300;
+  display: block;
+  margin-bottom: 24px;
+}
+.footer-note {
+  font-size: 11px;
+  color: rgba(245,240,230,.35);
+  font-weight: 300;
+  line-height: 1.9;
+  letter-spacing: .1em;
+}
 
+/* ── responsive ── */
+@media (max-width: 480px) {
+  .sec-header { grid-template-columns: 1fr; gap: 12px; }
+  .sec-num { display: none; }
+  .ig-modal { margin: 0; border-radius: 12px 12px 0 0; }
+  .ig-overlay { align-items: flex-end; padding: 0; }
+}
 </style>
 </head>
 <body>
 
+<!-- ══ HERO ══ -->
 <section class="hero">
+  <svg class="hero-bg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
+    <g fill="none" stroke="#f5f0e6" stroke-linecap="round" stroke-linejoin="round">
+      <!-- large ink wash tree left -->
+      <path d="M120 580 Q117 530 114 490 Q110 440 116 390 Q120 355 117 310 Q113 275 118 240" stroke-width="8"/>
+      <path d="M114 490 Q88 470 60 464" stroke-width="5"/>
+      <path d="M60 464 Q38 450 20 455" stroke-width="3.5"/>
+      <path d="M116 430 Q142 415 165 410" stroke-width="5"/>
+      <path d="M165 410 Q185 400 198 405" stroke-width="3.5"/>
+      <path d="M115 370 Q94 352 72 346" stroke-width="4"/>
+      <path d="M117 330 Q138 314 158 310" stroke-width="4"/>
+      <path d="M116 290 Q100 270 84 262" stroke-width="3.5"/>
+      <path d="M118 265 Q135 248 152 244" stroke-width="3.5"/>
+      <path d="M117 248 Q112 228 108 210" stroke-width="3"/>
+      <path d="M118 238 Q126 218 135 210" stroke-width="3"/>
+      <!-- leaf clusters -->
+      <ellipse cx="20" cy="453" rx="18" ry="11" transform="rotate(-12 20 453)"/>
+      <ellipse cx="198" cy="403" rx="16" ry="10" transform="rotate(16 198 403)"/>
+      <ellipse cx="72" cy="344" rx="14" ry="9" transform="rotate(-20 72 344)"/>
+      <ellipse cx="158" cy="308" rx="13" ry="8" transform="rotate(18 158 308)"/>
+      <ellipse cx="108" cy="208" rx="11" ry="8" transform="rotate(-25 108 208)"/>
+      <ellipse cx="135" cy="208" rx="10" ry="7" transform="rotate(22 135 208)"/>
+      <!-- right side blossom branch -->
+      <path d="M680 580 Q678 545 675 510 Q672 470 676 435 Q678 410 676 380" stroke-width="5"/>
+      <path d="M675 510 Q654 498 636 495" stroke-width="3.5"/>
+      <path d="M677 468 Q698 456 716 453" stroke-width="3.5"/>
+      <path d="M675 435 Q658 420 642 417" stroke-width="3"/>
+      <path d="M676 410 Q692 396 708 393" stroke-width="3"/>
+      <path d="M676 385 Q668 370 662 358" stroke-width="2.5"/>
+      <!-- blossom circles -->
+      <circle cx="636" cy="493" r="9" stroke-width="1.2"/>
+      <circle cx="628" cy="484" r="5.5" stroke-width="1"/>
+      <circle cx="644" cy="484" r="5.5" stroke-width="1"/>
+      <circle cx="636" cy="478" r="5.5" stroke-width="1"/>
+      <circle cx="716" cy="451" r="8" stroke-width="1.2"/>
+      <circle cx="708" cy="443" r="5" stroke-width="1"/>
+      <circle cx="724" cy="443" r="5" stroke-width="1"/>
+      <circle cx="716" cy="437" r="5" stroke-width="1"/>
+      <circle cx="642" cy="415" r="7" stroke-width="1"/>
+      <circle cx="708" cy="391" r="7" stroke-width="1"/>
+      <circle cx="662" cy="356" r="6" stroke-width="1"/>
+      <!-- falling petals -->
+      <ellipse cx="590" cy="520" rx="6" ry="3.5" transform="rotate(40 590 520)" stroke-width=".8"/>
+      <ellipse cx="730" cy="490" rx="5" ry="3" transform="rotate(-30 730 490)" stroke-width=".8"/>
+      <ellipse cx="610" cy="460" rx="5" ry="3" transform="rotate(55 610 460)" stroke-width=".8"/>
+    </g>
+  </svg>
+
+  <div class="hero-deco hero-deco-tl">
+    <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+      <rect x="1" y="1" width="58" height="58" stroke="rgba(245,240,230,.3)" stroke-width=".5"/>
+      <rect x="8" y="8" width="44" height="44" stroke="rgba(245,240,230,.15)" stroke-width=".5"/>
+    </svg>
+  </div>
+  <div class="hero-deco hero-deco-br">
+    <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+      <rect x="1" y="1" width="58" height="58" stroke="rgba(245,240,230,.3)" stroke-width=".5"/>
+      <rect x="8" y="8" width="44" height="44" stroke="rgba(245,240,230,.15)" stroke-width=".5"/>
+    </svg>
+  </div>
+
   <div class="hero-content">
+    <div class="hero-tag">· Jinyuan Caotang · 台中大安</div>
     <h1 class="hero-title">今 園 草 堂</h1>
-    <p class="hero-sub">大地實踐紀實 · 導覽手札</p>
+    <p class="hero-sub">草 堂 走 走　·　十 二 個 角 落 的 故 事</p>
+    <div class="hero-scroll" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})">
+      <span>向下探索</span>
+      <div class="scroll-line"></div>
+    </div>
   </div>
 </section>
 
-<nav class="nav-bar">
-  <div class="nav-item active" onclick="location.href='#s00'">🚽 環保廁所</div>
-  <div class="nav-item" onclick="location.href='#s01'">🍍 鳳梨酵素</div>
-  <div class="nav-item" onclick="location.href='#s02'">💧 液肥製作</div>
-  <div class="nav-item" onclick="location.href='#s03'">🌿 堆肥區</div>
-  <div class="nav-item" onclick="location.href='#s04'">🗼 蔬菜塔</div>
+<!-- ══ INTRO ══ -->
+<div class="intro" id="intro">
+  <p>這裡是今園草堂　一個從荒地慢慢長出來的地方<br>每一個角落都有自己的故事　掃描旗子上的 QR 碼　你就站在故事裡了</p>
+</div>
+
+<!-- ══ NAV ══ -->
+<nav class="nav-bar" id="nav-bar">
+  <div class="nav-item active" onclick="scrollTo('s01')"><span class="nav-emoji">🍍</span>鳳梨酵素</div>
+  <div class="nav-item" onclick="scrollTo('s02')"><span class="nav-emoji">💧</span>液肥</div>
+  <div class="nav-item" onclick="scrollTo('s03')"><span class="nav-emoji">🌿</span>廚餘堆肥</div>
+  <div class="nav-item" onclick="scrollTo('s04')"><span class="nav-emoji">🗼</span>蔬菜塔</div>
+  <div class="nav-item" onclick="scrollTo('s05')"><span class="nav-emoji">🎋</span>竹林</div>
+  <div class="nav-item" onclick="scrollTo('s06')"><span class="nav-emoji">🌾</span>風箱隔離帶</div>
+  <div class="nav-item" onclick="scrollTo('s07')"><span class="nav-emoji">🪿</span>白羅曼鵝</div>
+  <div class="nav-item" onclick="scrollTo('s08')"><span class="nav-emoji">🐑</span>羊舍</div>
+  <div class="nav-item" onclick="scrollTo('s09')"><span class="nav-emoji">🐔</span>雞舍</div>
+  <div class="nav-item" onclick="scrollTo('s10')"><span class="nav-emoji">🐸</span>生態池</div>
+  <div class="nav-item" onclick="scrollTo('s11')"><span class="nav-emoji">🥬</span>韌性菜園</div>
 </nav>
 
-<!-- 00 環保廁所 -->
-<section class="section" id="s00">
-  <div class="section-inner">
-    <div class="sec-header">
-      <span class="sec-emoji">🚽</span>
-      <div>
-        <span class="sec-name">環保廁所</span>
-        <span class="sec-tagline">草堂最坦誠的循環實踐</span>
-      </div>
-    </div>
-    <div class="sec-body">
-      這是草堂的地元老設施，2014 年底竣工。以環塑木搭建，雖不華麗，卻承載著草堂最重要的生態邏輯：<b>「肥水不落外人田」。</b>
-    </div>
-    <div class="callout">
-      <p>這是一座乾式廁所，完全不用一滴水沖馬桶。我們利用碳含量高的落葉、木屑、粗糠作為覆蓋物，來處理如廁者的「貢獻」。</p>
-    </div>
-    <div class="sec-body">
-      這些養分透過堆肥分解，循環成肥沃資源後回歸大地。在這裡，你吃得越乾淨，產出的肥料就越健康。試試看，這個不沖水的馬桶，真的的一點都不臭。
-    </div>
-    <div class="fact-box">
-      <span class="fact-tag">2014 竣工</span>
-      <span class="fact-tag">零耗水</span>
-      <span class="fact-tag">落葉木屑覆蓋</span>
-      <span class="fact-tag">地標元老</span>
-    </div>
-    <a href="https://www.instagram.com/jinyuan_caotang/" class="ig-btn">查看建造紀實 →</a>
-  </div>
-</section>
+<!-- ══ SECTIONS ══ -->
 
 <!-- 01 鳳梨酵素 -->
 <section class="section" id="s01">
   <div class="section-inner">
     <div class="sec-header">
-      <span class="sec-emoji">🍍</span>
-      <div>
+      <span class="sec-num">01</span>
+      <div class="sec-titles">
+        <span class="sec-emoji">🍍</span>
         <span class="sec-name">鳳梨酵素</span>
-        <span class="sec-tagline">雞隻們的天然助消化飲</span>
+        <span class="sec-tagline">給雞喝的天然消化飲</span>
       </div>
     </div>
+    <div class="sec-rule"></div>
     <div class="sec-body">
-      雞沒有牙齒，主要靠「肌胃」磨碎食物。為了讓草堂的雞更健康，我們特別泡製了鳳梨酵素，稀釋後供雞隻飲用。
+      你知道雞沒有牙齒嗎？牠們沒有咀嚼能力，主要靠體內的「肌胃」搭配啄食的砂礫來磨碎食物——所以養雞除了給飼料，還要提供足夠的砂礫供牠們啄食。
     </div>
     <div class="callout">
-      <p>酵素能幫助消化吸收，同時也減少了雞糞的味道。這份對動物的溫柔，最終都會回報在雞蛋的品質上。</p>
+      <p>草堂更進一步，親手泡製鳳梨酵素，稀釋後供雞隻們飲用。希望幫助牠們消化吸收，也讓雞舍的氣味更清爽一些。</p>
     </div>
-    <div class="fact-box">
-      <span class="fact-tag">天然發酵</span>
-      <span class="fact-tag">改善腸道</span>
-      <span class="fact-tag">友善養殖</span>
+    <div class="facts">
+      <span class="fact">天然發酵</span>
+      <span class="fact">改善消化</span>
+      <span class="fact">減少雞糞異味</span>
+      <span class="fact">手作泡製</span>
     </div>
-    <a href="https://www.instagram.com/jinyuan_caotang/" class="ig-btn">看酵素製作過程 →</a>
+    <a href="#" class="ig-btn" onclick="openIG('鳳梨酵素','🍍','草堂手泡鳳梨酵素，稀釋後供雞飲用，改善消化也讓雞舍更清爽。這是對動物友善農法的一個小小實驗。'); return false;">
+      <svg class="ig-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      查看紀實貼文
+    </a>
   </div>
 </section>
 
-<!-- 02 液肥製作 -->
+<!-- 02 液肥 -->
 <section class="section" id="s02">
   <div class="section-inner">
     <div class="sec-header">
-      <span class="sec-emoji">💧</span>
-      <div>
+      <span class="sec-num">02</span>
+      <div class="sec-titles">
+        <span class="sec-emoji">💧</span>
         <span class="sec-name">液肥製作</span>
-        <span class="sec-tagline">米糠與豆渣的華麗轉身</span>
+        <span class="sec-tagline">米糠豆渣發酵的田園秘方</span>
       </div>
     </div>
+    <div class="sec-rule"></div>
     <div class="sec-body">
-      配方來自土地：米糠、豆渣、糖蜜、腐植土。在適時的攪拌下，經過 2 至 4 週的發酵。
+      配方很簡單：米糠 + 豆渣 + 糖蜜 + 水，加上適時攪拌。若能加入一些山上的腐植土，效果更好。
     </div>
     <div class="callout">
-      <p>發酵時產生的撲鼻香氣，常吸引飛鳥與田鼠，牠們有時甚至會浸入其中「奉獻此身」。這份土地的特調，稀釋澆灌後的蔬菜長勢驚人。</p>
+      <p>充分發酵時常有撲鼻香氣，吸引飛鳥、田鼠、四腳蛇靠近覓食——牠們有時候會不小心浸入其中，就此奉獻此身。大自然的循環，意外又真實。</p>
     </div>
-    <div class="fact-box">
-      <span class="fact-tag">米糠豆渣基底</span>
-      <span class="fact-tag">熟成 2-4 週</span>
-      <span class="fact-tag">天然追肥</span>
+    <div class="sec-body">
+      經過 2 到 4 週熟成後，稀釋澆灌蔬菜，效果相當不錯。
     </div>
+    <div class="facts">
+      <span class="fact">米糠 + 豆渣</span>
+      <span class="fact">糖蜜發酵</span>
+      <span class="fact">2—4 週熟成</span>
+      <span class="fact">稀釋澆灌</span>
+    </div>
+    <a href="#" class="ig-btn" onclick="openIG('液肥製作','💧','米糠、豆渣、糖蜜與水，發酵2-4週後稀釋澆菜。香氣撲鼻，連野生動物都來湊熱鬧。'); return false;">
+      <svg class="ig-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      查看紀實貼文
+    </a>
   </div>
 </section>
 
-<!-- 03 堆肥區 -->
+<!-- 03 堆肥 -->
 <section class="section" id="s03">
   <div class="section-inner">
     <div class="sec-header">
-      <span class="sec-emoji">🌿</span>
-      <div>
+      <span class="sec-num">03</span>
+      <div class="sec-titles">
+        <span class="sec-emoji">🌿</span>
         <span class="sec-name">廚餘雜草堆肥</span>
-        <span class="sec-tagline">時間醞釀的黑色金子</span>
+        <span class="sec-tagline">兩戶廚餘、一年時光，變成土地的養分</span>
       </div>
     </div>
+    <div class="sec-rule"></div>
     <div class="sec-body">
-      這裡承載了兩戶家庭的廚餘與草堂雜草。完美的堆肥需要 30:1 的碳氮比、充足的日照與適時的翻動。
+      堆肥的幾個關鍵：適當的碳氮比（約 30:1）、充足日照、避免淋雨，以及適時翻動。缺少任一條件，過程就會拖長或失敗。
     </div>
     <div class="callout">
-      <p>每一堆肥都需要歷時年餘才能熟成。這一區的產出，每次大概可抵兩千元的有機肥，是草堂最紮實的資產。</p>
+      <p>草堂堆肥區承載兩戶家庭的廚餘，加上部分草堂雜草，兩區共治。每區約歷時一年以上才熟成——每次大概可抵兩千元有機肥的份量。</p>
     </div>
-    <div class="fact-box">
-      <span class="fact-tag">兩區共治</span>
-      <span class="fact-tag">年餘熟成</span>
-      <span class="fact-tag">循環經濟</span>
+    <div class="facts">
+      <span class="fact">碳氮比 30:1</span>
+      <span class="fact">需要日照</span>
+      <span class="fact">兩戶廚餘共治</span>
+      <span class="fact">年餘熟成</span>
+      <span class="fact">約值 2000 元有機肥</span>
     </div>
+    <a href="#" class="ig-btn" onclick="openIG('廚餘雜草堆肥','🌿','兩戶廚餘加上草堂雜草，歷時年餘堆肥熟成。一桶廢物，變成價值兩千元的有機肥，這就是循環。'); return false;">
+      <svg class="ig-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      查看紀實貼文
+    </a>
   </div>
 </section>
 
@@ -320,54 +682,360 @@ body {
 <section class="section" id="s04">
   <div class="section-inner">
     <div class="sec-header">
-      <span class="sec-emoji">🗼</span>
-      <div>
+      <span class="sec-num">04</span>
+      <div class="sec-titles">
+        <span class="sec-emoji">🗼</span>
         <span class="sec-name">蔬菜塔</span>
-        <span class="sec-tagline">現實與理想的實驗場</span>
+        <span class="sec-tagline">網路說很美好，現實挺殘酷</span>
       </div>
     </div>
+    <div class="sec-rule"></div>
     <div class="sec-body">
-      網路影片雖然美好，但現實往往殘酷。草堂在 2025 年末開始了這個實驗。
+      網路影片看了不少——免動力抽水系統、神奇機械裝置、磚縫種大菜、水管立體種植……畫面很美好，實際操作挺殘酷。
     </div>
     <div class="callout">
-      <p>目前雖然成效尚在觀察，但省水率已高達 95%，且肥水不落地、自動收集。這就是草堂的精神：不怕失敗，只怕不嘗試。</p>
+      <p>蔬菜塔於 2025 年 12 月誕生，是農忙之餘的一個實驗。成效如何尚不得而知，但省水率高達 95%，肥水不落地，還能自動收集成桶——至少這幾點讓人滿意。</p>
     </div>
-    <div class="fact-box">
-      <span class="fact-tag">2025 啟動</span>
-      <span class="fact-tag">省水 95%</span>
-      <span class="fact-tag">立體種植</span>
+    <div class="facts">
+      <span class="fact">2025.12 誕生</span>
+      <span class="fact">省水 95%</span>
+      <span class="fact">肥水不落地</span>
+      <span class="fact">自動收集成桶</span>
+      <span class="fact">實驗中</span>
     </div>
+    <a href="#" class="ig-btn" onclick="openIG('蔬菜塔','🗼','省水95%的立體種植實驗。網路影片說很美好，草堂正在驗證現實有多殘酷——2025.12月誕生，敬請期待結果。'); return false;">
+      <svg class="ig-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      查看紀實貼文
+    </a>
   </div>
 </section>
 
+<!-- 05 竹林 -->
+<section class="section" id="s05">
+  <div class="section-inner">
+    <div class="sec-header">
+      <span class="sec-num">05</span>
+      <div class="sec-titles">
+        <span class="sec-emoji">🎋</span>
+        <span class="sec-name">竹林</span>
+        <span class="sec-tagline">平地起高畦，不用半夜上山採筍</span>
+      </div>
+    </div>
+    <div class="sec-rule"></div>
+    <div class="sec-body">
+      為了不必半夜起早上山採筍，草堂特闢一區——平地起高畦種竹。甜龍竹與綠竹在這裡快樂生長，5 到 10 月是採筍的季節。
+    </div>
+    <div class="callout">
+      <p>12 月是修竹頭的日子：保留適量母竹及新竹，讓來年的筍子有出頭的空間。三壟竹中間的空閒畦地，輪作玉米和季節蔬菜，發揮林下經濟的最大效益。</p>
+    </div>
+    <div class="facts">
+      <span class="fact">甜龍竹</span>
+      <span class="fact">綠竹</span>
+      <span class="fact">採筍季 5—10 月</span>
+      <span class="fact">12 月修竹頭</span>
+      <span class="fact">林下輪作玉米</span>
+    </div>
+    <a href="#" class="ig-btn" onclick="openIG('竹林','🎋','草堂平地種竹，甜龍竹與綠竹快樂生長。5-10月採筍，中間畦地輪作玉米，一區多用。'); return false;">
+      <svg class="ig-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      查看紀實貼文
+    </a>
+  </div>
+</section>
+
+<!-- 06 風箱隔離帶 -->
+<section class="section" id="s06">
+  <div class="section-inner">
+    <div class="sec-header">
+      <span class="sec-num">06</span>
+      <div class="sec-titles">
+        <span class="sec-emoji">🌾</span>
+        <span class="sec-name">風箱隔離帶</span>
+        <span class="sec-tagline">從宜蘭帶回的一根枝條</span>
+      </div>
+    </div>
+    <div class="sec-rule"></div>
+    <div class="sec-body">
+      風箱草多分布在宜蘭及北海岸一帶，現在已遍及全台。草堂的這一排，是由園丁長於 2016 年 10 月自宜蘭邱錦和老師園區帶回枝條扦插而成。
+    </div>
+    <div class="callout">
+      <p>主要任務是形成隔離帶，阻絕西邊鄰田農藥噴灑的飄散，避免污染草堂的食用蔬果。每年須修剪一兩次，以免影響鄰田田埂及草堂菜園的日照。</p>
+    </div>
+    <div class="facts">
+      <span class="fact">2016.10 扦插</span>
+      <span class="fact">來自宜蘭</span>
+      <span class="fact">隔絕農藥飄散</span>
+      <span class="fact">每年修剪 1—2 次</span>
+    </div>
+    <a href="#" class="ig-btn" onclick="openIG('風箱隔離帶','🌾','從宜蘭帶回一根枝條扦插，如今成為阻擋鄰田農藥的天然屏障。一個有機農場的自我保護。'); return false;">
+      <svg class="ig-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      查看紀實貼文
+    </a>
+  </div>
+</section>
+
+<!-- 07 鵝 -->
+<section class="section" id="s07">
+  <div class="section-inner">
+    <div class="sec-header">
+      <span class="sec-num">07</span>
+      <div class="sec-titles">
+        <span class="sec-emoji">🪿</span>
+        <span class="sec-name">白羅曼鵝</span>
+        <span class="sec-tagline">四兄妹，知恩圖報，守土有責</span>
+      </div>
+    </div>
+    <div class="sec-rule"></div>
+    <div class="sec-body">
+      白羅曼鵝壽命可達 10 到 30 年。草堂的四兄妹於 2025 年 4 月進駐。
+    </div>
+    <div class="callout">
+      <p>對於餵食的主人們，牠們知恩圖報；對於外來的陌生人，守土有責——一般先對空嘶吼，接下來奉上親吻。對於誤闖北院的野狗及「小龍」，也能起到警戒及驅逐的效果。</p>
+    </div>
+    <div class="facts">
+      <span class="fact">白羅曼品種</span>
+      <span class="fact">壽命 10—30 年</span>
+      <span class="fact">2025.04 進駐</span>
+      <span class="fact">四兄妹</span>
+      <span class="fact">天然守衛</span>
+    </div>
+    <a href="#" class="ig-btn" onclick="openIG('白羅曼鵝','🪿','先對空嘶吼，再奉上親吻。四兄妹2025年4月進駐，是草堂最盡責的守衛，也是最熱情的迎賓員。'); return false;">
+      <svg class="ig-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      查看紀實貼文
+    </a>
+  </div>
+</section>
+
+<!-- 08 羊舍 -->
+<section class="section" id="s08">
+  <div class="section-inner">
+    <div class="sec-header">
+      <span class="sec-num">08</span>
+      <div class="sec-titles">
+        <span class="sec-emoji">🐑</span>
+        <span class="sec-name">羊過 · 羊貴妃</span>
+        <span class="sec-tagline">2025 年的新住民，吃掉了一片香蕉</span>
+      </div>
+    </div>
+    <div class="sec-rule"></div>
+    <div class="sec-body">
+      我們是羊過與羊貴妃，2025 年 8 月 12 日進駐草堂的新住民。當時分別是 6 個月及 4 個月大，初到時過了幾個月無拘無束的日子。
+    </div>
+    <div class="callout">
+      <p>香蕉、火龍果、山藥……盡皆美味可口。後來園丁長發現狀況不對，連夜趕工，在 2026 年元旦搭建好這個羊舍。自此只能在姐姐哥哥回草堂時偶爾放風。</p>
+    </div>
+    <div class="sec-body">
+      羊依用途可分：綿羊、肉羊、乳羊——我們是土山羊（肉用），較早移民到福爾摩沙的品種。
+    </div>
+    <div class="facts">
+      <span class="fact">2025.08.12 進駐</span>
+      <span class="fact">土山羊（肉用）</span>
+      <span class="fact">羊過 + 羊貴妃</span>
+      <span class="fact">羊舍 2026.元旦 完工</span>
+    </div>
+    <a href="#" class="ig-btn" onclick="openIG('羊過與羊貴妃','🐑','香蕉火龍果山藥通通吃掉，逼得園丁長元旦連夜搭羊舍。牠們的進駐讓草堂熱鬧了許多。'); return false;">
+      <svg class="ig-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      查看紀實貼文
+    </a>
+  </div>
+</section>
+
+<!-- 09 雞舍 -->
+<section class="section" id="s09">
+  <div class="section-inner">
+    <div class="sec-header">
+      <span class="sec-num">09</span>
+      <div class="sec-titles">
+        <span class="sec-emoji">🐔</span>
+        <span class="sec-name">雞舍</span>
+        <span class="sec-tagline">沙浴、棲架、產房，讓雞快樂生活</span>
+      </div>
+    </div>
+    <div class="sec-rule"></div>
+    <div class="sec-body">
+      雞的壽命 3 到 5 年。母雞產蛋高峰期在 6 到 20 個月大——草堂的母雞可以頤養天年，一般蛋雞場則會汰弱換強。
+    </div>
+    <div class="callout">
+      <p>雞舍配備：沙浴區、棲架、產房，低密度養殖，讓雞隻快樂生活。公雞一年養殖數批，每批 10 隻，足 5 個月大送宰，奉獻給草堂及會員。母雞維持約 40 隻，分三區域養殖，避免老鳥霸凌菜鳥。</p>
+    </div>
+    <div class="sec-body">
+      雞是夜盲，日落前多會跳到高處棲息。下蛋喜在陰暗安全處，故特別營造產房環境。
+    </div>
+    <div class="facts">
+      <span class="fact">母雞約 40 隻</span>
+      <span class="fact">分三區養殖</span>
+      <span class="fact">公雞每批 10 隻</span>
+      <span class="fact">沙浴區 + 棲架 + 產房</span>
+      <span class="fact">低密度放養</span>
+    </div>
+    <a href="#" class="ig-btn" onclick="openIG('雞舍','🐔','沙浴、棲架、產房一應俱全。草堂母雞可以頤養天年，這裡不是蛋雞場。'); return false;">
+      <svg class="ig-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      查看紀實貼文
+    </a>
+  </div>
+</section>
+
+<!-- 10 生態池 -->
+<section class="section" id="s10">
+  <div class="section-inner">
+    <div class="sec-header">
+      <span class="sec-num">10</span>
+      <div class="sec-titles">
+        <span class="sec-emoji">🐸</span>
+        <span class="sec-name">生態池</span>
+        <span class="sec-tagline">三年、近百人次、一磚一鏟皆手作</span>
+      </div>
+    </div>
+    <div class="sec-rule"></div>
+    <div class="sec-body">
+      耗時三年，近百人次參與，一磚一鏟皆是手作，於 2017 年底初成。
+    </div>
+    <div class="callout">
+      <p>池內種植：藺草、蓮花、睡蓮、莎草、野薑花、粉綠狐尾草、銅錢草……<br>池陸種植：穗花棋盤腳、射干、虎尾蘭、雞蛋花、玉蘭花、含笑花、桑葚、柳樹……</p>
+    </div>
+    <div class="sec-body">
+      三大目的：淨化外來溝渠水源、提供小生物棲息地、創造景觀。
+    </div>
+    <div class="facts">
+      <span class="fact">2017 年底完工</span>
+      <span class="fact">近百人次手作</span>
+      <span class="fact">耗時三年</span>
+      <span class="fact">淨化水源</span>
+      <span class="fact">生物棲息地</span>
+    </div>
+    <a href="#" class="ig-btn" onclick="openIG('生態池','🐸','三年、百人次、一磚一鏟手作完成。蓮花、睡蓮、野薑花在這裡共生，青蛙把這裡當家。'); return false;">
+      <svg class="ig-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      查看紀實貼文
+    </a>
+  </div>
+</section>
+
+<!-- 11 韌性菜園 -->
+<section class="section" id="s11">
+  <div class="section-inner">
+    <div class="sec-header">
+      <span class="sec-num">11</span>
+      <div class="sec-titles">
+        <span class="sec-emoji">🥬</span>
+        <span class="sec-name">韌性菜園</span>
+        <span class="sec-tagline">距台灣海峽 2 公里，每年總要積水幾次</span>
+      </div>
+    </div>
+    <div class="sec-rule"></div>
+    <div class="sec-body">
+      草堂位於大安溪下游，距離台灣海峽出海口僅 2 公里。逢梅雨季或颱風強降雨，堂前大排水位上升，田區降雨宣洩不及。
+    </div>
+    <div class="callout">
+      <p>園區每年總要積水幾次。喬木灌木無妨，奈何短期蔬菜沒有長腳——只能拉高位階，因應極端氣候的衝擊。「韌性」，是這片菜園最重要的性格。</p>
+    </div>
+    <div class="facts">
+      <span class="fact">大安溪下游</span>
+      <span class="fact">距海峽出海口 2km</span>
+      <span class="fact">每年積水數次</span>
+      <span class="fact">高畦因應積水</span>
+      <span class="fact">極端氣候農法</span>
+    </div>
+    <a href="#" class="ig-btn" onclick="openIG('韌性菜園','🥬','距台灣海峽2公里，每年積水數次。蔬菜沒有長腳，只能把菜床拉高，學會和氣候共存。'); return false;">
+      <svg class="ig-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      查看紀實貼文
+    </a>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
 <footer class="footer">
   <div class="footer-logo">今 園 草 堂</div>
+  <span class="footer-en">· JINYUAN ORIGIN · 台中大安 ·</span>
   <p class="footer-note">
-    台中大安區 · 綠色保育農場<br>
-    與萬物共生，紀錄土地的每一份饋贈。
+    每一個 QR 碼都是一個邀請<br>
+    謝謝你在這裡駐足　感受這片土地的溫度
   </p>
 </footer>
 
-<script>
-// 簡單的導覽列 active 切換邏輯
-const navItems = document.querySelectorAll('.nav-item');
-window.addEventListener('scroll', () => {
-  let current = "";
-  document.querySelectorAll('section').forEach(section => {
-    const sectionTop = section.offsetTop;
-    if (pageYOffset >= sectionTop - 100) {
-      current = section.getAttribute('id');
-    }
-  });
+<!-- ══ IG MODAL ══ -->
+<div class="ig-overlay" id="ig-overlay" onclick="closeIGOnBg(event)">
+  <div class="ig-modal" id="ig-modal">
+    <div class="ig-modal-top">
+      <div class="ig-modal-avatar" id="ig-avatar">🌿</div>
+      <div>
+        <div class="ig-modal-handle">jinyuan_caotang</div>
+        <div class="ig-modal-tag" id="ig-tag">#今園草堂</div>
+      </div>
+    </div>
+    <div class="ig-modal-img">
+      <div class="ig-modal-img-icon" id="ig-img-icon">🍍</div>
+      <div class="ig-modal-img-hint">紀實照片 · 點擊前往 IG 查看</div>
+    </div>
+    <div class="ig-modal-body">
+      <div class="ig-modal-title" id="ig-modal-title">鳳梨酵素</div>
+      <div class="ig-modal-desc" id="ig-modal-desc">草堂手泡鳳梨酵素，稀釋後供雞飲用，改善消化也讓雞舍更清爽。</div>
+      <div class="ig-modal-actions">
+        <button class="ig-action-btn" onclick="closeIG()">關閉</button>
+        <button class="ig-action-btn primary" onclick="goIG()">前往 IG 貼文 →</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-  navItems.forEach(item => {
-    item.classList.remove('active');
-    if (item.getAttribute('onclick').includes(current)) {
-      item.classList.add('active');
+<script>
+// ── NAV active state ──
+const sections = ['s01','s02','s03','s04','s05','s06','s07','s08','s09','s10','s11'];
+const navItems = document.querySelectorAll('.nav-item');
+
+function scrollTo(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const idx = sections.indexOf(e.target.id);
+      if (idx >= 0) {
+        navItems.forEach((n,i) => n.classList.toggle('active', i === idx));
+        // scroll nav item into view
+        navItems[idx]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
     }
   });
+}, { threshold: 0.4, rootMargin: '-50px 0px -40% 0px' });
+
+sections.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) observer.observe(el);
+});
+
+// ── IG Modal ──
+let currentIGUrl = 'https://www.instagram.com/jinyuan_caotang/';
+
+function openIG(title, icon, desc) {
+  document.getElementById('ig-avatar').textContent = icon;
+  document.getElementById('ig-img-icon').textContent = icon;
+  document.getElementById('ig-tag').textContent = '#今園草堂 #' + title.replace(/·/g,'').trim();
+  document.getElementById('ig-modal-title').textContent = title;
+  document.getElementById('ig-modal-desc').textContent = desc;
+  // 這裡可以替換為各據點的真實 IG 貼文 URL
+  currentIGUrl = 'https://www.instagram.com/jinyuan_caotang/';
+  document.getElementById('ig-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeIG() {
+  document.getElementById('ig-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeIGOnBg(e) {
+  if (e.target === document.getElementById('ig-overlay')) closeIG();
+}
+
+function goIG() {
+  window.open(currentIGUrl, '_blank');
+  closeIG();
+}
+
+// ESC to close
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeIG();
 });
 </script>
-
 </body>
 </html>

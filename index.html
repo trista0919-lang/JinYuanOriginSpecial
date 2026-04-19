@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>今園草堂 · 草堂走走</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1e1a14;
+  --ink-85: rgba(30,26,20,.85); /* 調深字體 */
+  --ink-40: rgba(30,26,20,.4);
+  --ink-10: rgba(30,26,20,.1);
+  --paper: #f5f0e6;
+  --paper-warm: #ede6d8;
+  --paper-deep: #e0d6c4;
+  --rust: #8b3a1f;
+  --sage: #4a6741;
+  --gold: #9a7010;
+  --cream: #faf6ee;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Serif TC', serif;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: var(--ink);
+  padding: 40px 24px;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: clamp(40px, 10vw, 80px);
+  font-weight: 200;
+  letter-spacing: .35em;
+  color: var(--paper);
+  line-height: 1.2;
+  margin-bottom: 24px;
+}
+
+.hero-sub {
+  font-size: 16px;
+  font-weight: 300;
+  letter-spacing: .25em;
+  color: rgba(245,240,230,.6);
+}
+
+/* ── NAV BAR ── */
+.nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(245,240,230,.95);
+  backdrop-filter: blur(10px);
+  border-bottom: .5px solid var(--ink-10);
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-bar::-webkit-scrollbar { display: none; }
+
+.nav-item {
+  flex-shrink: 0;
+  padding: 16px 20px;
+  font-size: 13px;
+  color: var(--ink-85);
+  cursor: pointer;
+  white-space: nowrap;
+  font-weight: 400;
+}
+.nav-item.active { color: var(--rust); font-weight: 600; border-bottom: 2px solid var(--rust); }
+
+/* ── SECTIONS ── */
+.section {
+  padding: 80px 0;
+  border-bottom: .5px solid var(--ink-10);
+  scroll-margin-top: 50px;
+}
+.section:nth-child(even) { background: var(--cream); }
+
+.section-inner {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* 改良後的標題：ICON 在文字前面 */
+.sec-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.sec-emoji {
+  font-size: 32px;
+  line-height: 1;
+}
+
+.sec-name {
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: .05em;
+  color: var(--ink);
+}
+
+.sec-tagline {
+  display: block;
+  font-size: 14px;
+  letter-spacing: .15em;
+  color: var(--rust);
+  font-weight: 400;
+  margin-top: 4px;
+}
+
+.sec-body {
+  font-size: 17px; /* 加大字體 */
+  line-height: 2.1;
+  color: var(--ink-85); /* 加深顏色 */
+  font-weight: 400;
+  letter-spacing: .04em;
+  margin-bottom: 24px;
+}
+
+.callout {
+  background: var(--paper-warm);
+  border-left: 3px solid var(--gold);
+  padding: 20px 24px;
+  margin: 30px 0;
+}
+.callout p {
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--ink-85);
+  font-weight: 500;
+}
+
+.fact-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+.fact-tag {
+  background: var(--paper-deep);
+  padding: 6px 14px;
+  font-size: 12px;
+  color: var(--ink-85);
+  border-radius: 2px;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
+.ig-btn {
+  display: inline-block;
+  margin-top: 32px;
+  padding: 14px 28px;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: .1em;
+  transition: all 0.3s;
+}
+.ig-btn:hover { background: var(--ink); color: var(--paper); }
+
+/* ── FOOTER ── */
+.footer {
+  background: var(--ink);
+  padding: 60px 24px;
+  text-align: center;
+  color: var(--paper);
+}
+.footer-logo { font-size: 24px; letter-spacing: .4em; opacity: .8; margin-bottom: 12px; }
+.footer-note { font-size: 13px; opacity: .5; line-height: 1.8; }
+
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1 class="hero-title">今 園 草 堂</h1>
+    <p class="hero-sub">大地實踐紀實 · 導覽手札</p>
+  </div>
+</section>
+
+<nav class="nav-bar">
+  <div class="nav-item active" onclick="location.href='#s00'">🚽 環保廁所</div>
+  <div class="nav-item" onclick="location.href='#s01'">🍍 鳳梨酵素</div>
+  <div class="nav-item" onclick="location.href='#s02'">💧 液肥製作</div>
+  <div class="nav-item" onclick="location.href='#s03'">🌿 堆肥區</div>
+  <div class="nav-item" onclick="location.href='#s04'">🗼 蔬菜塔</div>
+</nav>
+
+<!-- 00 環保廁所 -->
+<section class="section" id="s00">
+  <div class="section-inner">
+    <div class="sec-header">
+      <span class="sec-emoji">🚽</span>
+      <div>
+        <span class="sec-name">環保廁所</span>
+        <span class="sec-tagline">草堂最坦誠的循環實踐</span>
+      </div>
+    </div>
+    <div class="sec-body">
+      這是草堂的地元老設施，2014 年底竣工。以環塑木搭建，雖不華麗，卻承載著草堂最重要的生態邏輯：<b>「肥水不落外人田」。</b>
+    </div>
+    <div class="callout">
+      <p>這是一座乾式廁所，完全不用一滴水沖馬桶。我們利用碳含量高的落葉、木屑、粗糠作為覆蓋物，來處理如廁者的「貢獻」。</p>
+    </div>
+    <div class="sec-body">
+      這些養分透過堆肥分解，循環成肥沃資源後回歸大地。在這裡，你吃得越乾淨，產出的肥料就越健康。試試看，這個不沖水的馬桶，真的的一點都不臭。
+    </div>
+    <div class="fact-box">
+      <span class="fact-tag">2014 竣工</span>
+      <span class="fact-tag">零耗水</span>
+      <span class="fact-tag">落葉木屑覆蓋</span>
+      <span class="fact-tag">地標元老</span>
+    </div>
+    <a href="https://www.instagram.com/jinyuan_caotang/" class="ig-btn">查看建造紀實 →</a>
+  </div>
+</section>
+
+<!-- 01 鳳梨酵素 -->
+<section class="section" id="s01">
+  <div class="section-inner">
+    <div class="sec-header">
+      <span class="sec-emoji">🍍</span>
+      <div>
+        <span class="sec-name">鳳梨酵素</span>
+        <span class="sec-tagline">雞隻們的天然助消化飲</span>
+      </div>
+    </div>
+    <div class="sec-body">
+      雞沒有牙齒，主要靠「肌胃」磨碎食物。為了讓草堂的雞更健康，我們特別泡製了鳳梨酵素，稀釋後供雞隻飲用。
+    </div>
+    <div class="callout">
+      <p>酵素能幫助消化吸收，同時也減少了雞糞的味道。這份對動物的溫柔，最終都會回報在雞蛋的品質上。</p>
+    </div>
+    <div class="fact-box">
+      <span class="fact-tag">天然發酵</span>
+      <span class="fact-tag">改善腸道</span>
+      <span class="fact-tag">友善養殖</span>
+    </div>
+    <a href="https://www.instagram.com/jinyuan_caotang/" class="ig-btn">看酵素製作過程 →</a>
+  </div>
+</section>
+
+<!-- 02 液肥製作 -->
+<section class="section" id="s02">
+  <div class="section-inner">
+    <div class="sec-header">
+      <span class="sec-emoji">💧</span>
+      <div>
+        <span class="sec-name">液肥製作</span>
+        <span class="sec-tagline">米糠與豆渣的華麗轉身</span>
+      </div>
+    </div>
+    <div class="sec-body">
+      配方來自土地：米糠、豆渣、糖蜜、腐植土。在適時的攪拌下，經過 2 至 4 週的發酵。
+    </div>
+    <div class="callout">
+      <p>發酵時產生的撲鼻香氣，常吸引飛鳥與田鼠，牠們有時甚至會浸入其中「奉獻此身」。這份土地的特調，稀釋澆灌後的蔬菜長勢驚人。</p>
+    </div>
+    <div class="fact-box">
+      <span class="fact-tag">米糠豆渣基底</span>
+      <span class="fact-tag">熟成 2-4 週</span>
+      <span class="fact-tag">天然追肥</span>
+    </div>
+  </div>
+</section>
+
+<!-- 03 堆肥區 -->
+<section class="section" id="s03">
+  <div class="section-inner">
+    <div class="sec-header">
+      <span class="sec-emoji">🌿</span>
+      <div>
+        <span class="sec-name">廚餘雜草堆肥</span>
+        <span class="sec-tagline">時間醞釀的黑色金子</span>
+      </div>
+    </div>
+    <div class="sec-body">
+      這裡承載了兩戶家庭的廚餘與草堂雜草。完美的堆肥需要 30:1 的碳氮比、充足的日照與適時的翻動。
+    </div>
+    <div class="callout">
+      <p>每一堆肥都需要歷時年餘才能熟成。這一區的產出，每次大概可抵兩千元的有機肥，是草堂最紮實的資產。</p>
+    </div>
+    <div class="fact-box">
+      <span class="fact-tag">兩區共治</span>
+      <span class="fact-tag">年餘熟成</span>
+      <span class="fact-tag">循環經濟</span>
+    </div>
+  </div>
+</section>
+
+<!-- 04 蔬菜塔 -->
+<section class="section" id="s04">
+  <div class="section-inner">
+    <div class="sec-header">
+      <span class="sec-emoji">🗼</span>
+      <div>
+        <span class="sec-name">蔬菜塔</span>
+        <span class="sec-tagline">現實與理想的實驗場</span>
+      </div>
+    </div>
+    <div class="sec-body">
+      網路影片雖然美好，但現實往往殘酷。草堂在 2025 年末開始了這個實驗。
+    </div>
+    <div class="callout">
+      <p>目前雖然成效尚在觀察，但省水率已高達 95%，且肥水不落地、自動收集。這就是草堂的精神：不怕失敗，只怕不嘗試。</p>
+    </div>
+    <div class="fact-box">
+      <span class="fact-tag">2025 啟動</span>
+      <span class="fact-tag">省水 95%</span>
+      <span class="fact-tag">立體種植</span>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-logo">今 園 草 堂</div>
+  <p class="footer-note">
+    台中大安區 · 綠色保育農場<br>
+    與萬物共生，紀錄土地的每一份饋贈。
+  </p>
+</footer>
+
+<script>
+// 簡單的導覽列 active 切換邏輯
+const navItems = document.querySelectorAll('.nav-item');
+window.addEventListener('scroll', () => {
+  let current = "";
+  document.querySelectorAll('section').forEach(section => {
+    const sectionTop = section.offsetTop;
+    if (pageYOffset >= sectionTop - 100) {
+      current = section.getAttribute('id');
+    }
+  });
+
+  navItems.forEach(item => {
+    item.classList.remove('active');
+    if (item.getAttribute('onclick').includes(current)) {
+      item.classList.add('active');
+    }
+  });
+});
+</script>
+
+</body>
+</html>
